@@ -1,7 +1,10 @@
+#ifndef SERVO
+#define SERVO
 #include <ESP32PWM.h>
 #include <ESP32Servo.h>
 #include <ESP32Tone.h>
 #include <analogWrite.h>
+#include "Arduino.h"
 
 class PushServo {
  private:
@@ -14,3 +17,5 @@ class PushServo {
   PushServo(int, int, int);
   void push_button();
 };
+
+#endif

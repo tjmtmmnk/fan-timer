@@ -1,5 +1,4 @@
 #include "servo.h"
-#include "Arduino.h"
 
 PushServo::PushServo(int _servo_pin, int _start_pos, int _push_button_pos)
     : servo_pin(_servo_pin),
