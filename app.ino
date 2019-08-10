@@ -4,9 +4,13 @@
 PushServo *servo;
 Esp32Wifi *wifi;
 
+const int led_pin = 2;
+const int servo_pin = 33;
+
 void setup() {
+  pinMode(led_pin, OUTPUT);
   Serial.begin(115200);
-  servo = new PushServo(33, 0, 50);
+  servo = new PushServo(servo_pin, 0, 50);
   wifi = new Esp32Wifi(80);
   wifi->connect();
 }

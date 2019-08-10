@@ -38,7 +38,6 @@ void Esp32Wifi::receive_UTC_time() {
             client->println("HTTP/1.1 200 OK");
             client->println("Content-type:text/html");
             client->println();
-
             client->print(
                 "Click <a href=\"/H\">here</a> to turn the LED on pin 5 "
                 "on.<br>");
@@ -46,6 +45,7 @@ void Esp32Wifi::receive_UTC_time() {
                 "Click <a href=\"/L\">here</a> to turn the LED on pin 5 "
                 "off.<br>");
 
+            // The HTTP response ends with another blank line:
             client->println();
             break;
           } else {
@@ -56,6 +56,7 @@ void Esp32Wifi::receive_UTC_time() {
         }
 
         if (current_line.endsWith("GET /H")) {
+          Serial.println("high!!!!");
           digitalWrite(2, HIGH);
         }
         if (current_line.endsWith("GET /L")) {
@@ -63,8 +64,7 @@ void Esp32Wifi::receive_UTC_time() {
         }
       }
     }
+    client->stop();
+    Serial.println("Client Disconnected.");
   }
-
-  client->stop();
-  Serial.println("Client Disconnected.");
 }
