@@ -2,6 +2,7 @@
 
 Esp32Wifi::Esp32Wifi(int _port) : port(_port) {
   server = new WiFiServer(port);
+  servo = new PushServo(33, 0, 50);
 };
 
 void Esp32Wifi::connect() {
@@ -38,12 +39,7 @@ void Esp32Wifi::receive_UTC_time() {
             client->println("HTTP/1.1 200 OK");
             client->println("Content-type:text/html");
             client->println();
-            client->print(
-                "Click <a href=\"/H\">here</a> to turn the LED on pin 5 "
-                "on.<br>");
-            client->print(
-                "Click <a href=\"/L\">here</a> to turn the LED on pin 5 "
-                "off.<br>");
+            client->print("Click <a href=\"/P\">here</a> to push button<br>");
 
             // The HTTP response ends with another blank line:
             client->println();
@@ -55,12 +51,8 @@ void Esp32Wifi::receive_UTC_time() {
           current_line += c;
         }
 
-        if (current_line.endsWith("GET /H")) {
-          Serial.println("high!!!!");
-          digitalWrite(2, HIGH);
-        }
-        if (current_line.endsWith("GET /L")) {
-          digitalWrite(2, LOW);
+        if (current_line.endsWith("GET /P")) {
+          servo->push_button();
         }
       }
     }
